@@ -4,13 +4,14 @@ using XLSX
 
 FOLDER_NAME = something(ARGS[1], "ex1")
 FUNCTION_LATEX = "ln(x)"
+X₀ = 1.8
 
 # Função analisada: ln(x)
 func = log
 # Derivada (solução analítica): 1/x
 deriv = inv
-# Valor da derivada em 1.8
-expected_value = deriv(1.8)
+# Valor da derivada em X₀
+expected_value = deriv(X₀)
 # Diferença avançada
 forward_diff(y, x0, h) = (y(x0 + h) - y(x0)) / h
 # Diferença atrasada
@@ -32,9 +33,9 @@ h_list = LinRange(
 )
 
 for h in h_list
-    val_forwards = forward_diff(func, 1.8, h)
-    val_backwards = backwards_diff(func, 1.8, h)
-    val_centered = centered_diff(func, 1.8, h)
+    val_forwards = forward_diff(func, X₀, h)
+    val_backwards = backwards_diff(func, X₀, h)
+    val_centered = centered_diff(func, X₀, h)
     push!(df, ["Avançada" h val_forwards abs(val_forwards - expected_value)])
     push!(df, ["Atrasada" h val_backwards abs(val_backwards - expected_value)])
     push!(df, ["Centrada" h val_centered abs(val_centered - expected_value)])
@@ -66,7 +67,7 @@ p = plot(
     xflip = true,
     xscale = :log10,
     label = ["Avançada" "Atrasada" "Centrada"],
-    title = "Estimativa de \$y'(1.8)\$ usando diferenças finitas\n\$y = $(FUNCTION_LATEX)\$",
+    title = "Estimativa de \$y'($(X₀))\$ usando diferenças finitas\n\$y = $(FUNCTION_LATEX)\$",
     xlabel = "Passo",
     ylabel = "Erro",
     dpi = 450,
