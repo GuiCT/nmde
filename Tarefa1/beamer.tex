@@ -1,0 +1,149 @@
+\documentclass[11pt]{beamer}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{csvsimple}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+%Information to be included in the title page:
+\title[T.1. -- MCED]{Tarefa 1 de Métodos Computacionais para Equações Diferenciais}
+\author[Tomiasi, G.C.]{Guilherme Cesar Tomiasi\inst{1}}
+\institute[UNESP] % (optional)
+{
+  \inst{1}
+  Departamento de Matemática e Computação\\
+  Universidade Estadual Paulista ``Júlio de Mesquita Filho''
+}
+\date{24 de março de 2025}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Sumário}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\begin{document}
+\frame{\titlepage}
+
+\section{Introdução ao problema}
+
+\begin{frame}
+    \frametitle{Aproximação via diferenças finitas}
+    
+    Dada uma determinada função $y$, é possível aproximar, numericamente, a sua derivada (dada por $y'$) a partir das seguintes fórmulas:
+    \begin{itemize}
+        \item Diferença \textbf{avançada}: $y'_x = \dfrac{y_{x+1} - y_x}{h} + O(h)$
+        \item Diferença \textbf{atrasada}: $y'_x = \dfrac{y_{x} - y_{x-1}}{h} + O(h)$
+        \item Diferença \textbf{centrada}: $y'_x = \dfrac{y_{x+1} - y_{x-1}}{2h} + O(h^2)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Comportamento esperado do errro}
+
+    Observamos que as diferenças avançada e atrasada possuem ordem de erro dominada assintoticamente por $h$, enquanto a diferença centrada é dominada assintoticamente por $h^2$. Dessa maneira, é esperado que o erro do valor da derivada aproximado pela fórmula da diferença centrada seja muito menor para um mesmo valor de $h$.
+\end{frame}
+
+\section{Função escolhida para demonstração}
+
+\begin{frame}
+    Para fazer a demonstração desse comportamento, é necessário escolher uma função com solução analítica conhecida, calcular o erro de cada aproximação e observar a evolução desses valores. No caso demonstrado, foi escolhida a função $y(x)=\cos(x^2)$, cuja derivada analítica é $y'(x)=-2x\sin(x^2)$.
+\end{frame}
+
+\section{Resultados (gráficos)}
+
+\begin{frame}
+    \frametitle{$h=0.1$}
+    \begin{figure}
+        \includegraphics[width=0.8\linewidth]{results/customFunction_h_0.1.png}
+        \caption{Resultados para $h=0.1$}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{$h=0.01$}
+    \begin{figure}
+        \includegraphics[width=0.8\linewidth]{results/customFunction_h_0.01.png}
+        \caption{Resultados para $h=0.01$}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{$h=0.0001$}
+    \begin{figure}
+        \includegraphics[width=0.8\linewidth]{results/customFunction_h_0.0001.png}
+        \caption{Resultados para $h=0.0001$}
+    \end{figure}
+\end{frame}
+
+\section{Resultados (tabulados)}
+
+\begin{frame}
+    \frametitle{$h=0.1$}
+    \begin{table}[H]
+        \centering
+        \resizebox{\textwidth}{!}{
+            \begin{tabular}{ll|lllllllll}
+            \hline
+            \csvreader[
+                column count=11,
+                no head,
+                table head=\hline,
+                late after line=\\\hline
+            ]
+            {results/customFunction_h_0.1.csv}
+            {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+            {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+        \end{tabular}}
+        \caption{$h=0.1$}
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{$h=0.01$}
+    \begin{table}[H]
+        \centering
+        \resizebox{\textwidth}{!}{
+            \begin{tabular}{ll|lllllllll}
+            \hline
+            \csvreader[
+                column count=11,
+                no head,
+                table head=\hline,
+                late after line=\\\hline
+            ]
+            {results/customFunction_h_0.01.csv}
+            {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+            {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+        \end{tabular}}
+        \caption{$h=0.01$}
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{$h=0.0001$}
+    \begin{table}[H]
+        \centering
+        \resizebox{\textwidth}{!}{
+            \begin{tabular}{ll|lllllllll}
+            \hline
+            \csvreader[
+                column count=11,
+                no head,
+                table head=\hline,
+                late after line=\\\hline
+            ]
+            {results/customFunction_h_0.0001.csv}
+            {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+            {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+        \end{tabular}}
+        \caption{$h=0.0001$}
+    \end{table}
+\end{frame}
+
+\section{Extra: Interatividade}
+
+\end{document}

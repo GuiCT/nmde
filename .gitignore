@@ -1,2 +1,16 @@
 # Pasta de resultados
 **/results/**
+
+# Arquivos temporários da compilação via LaTeX
+**/*.fls
+**/*.fdb_latexmk
+**/*.aux
+**/*.log
+**/*.synctex.gz
+**/*.toc
+**/*.nav
+**/*.out
+**/*.snm
+
+# Arquivos temporários
+**/*.tmp*

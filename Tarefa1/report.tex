@@ -1,0 +1,339 @@
+\documentclass[12pt]{article}
+\usepackage[portuguese]{babel}
+\usepackage[a4paper, left=30mm, right=20mm, top=30mm, bottom=20mm]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{csvsimple}
+\usepackage{float}
+
+% Parâmetros da Capa
+\newcommand{\titulo}{1ª Tarefa de Métodos Computacionais para Equações Diferenciais}
+\newcommand{\autor}{Guilherme Cesar Tomiasi}
+\newcommand{\cidade}{Presidente Prudente}
+% ================================================================================
+
+\begin{document}
+%Definir o espaçamento entre as linhas para 1.5
+\setstretch{1.5}
+
+\input{../capa.tex}
+\singlespacing
+\newpage
+\tableofcontents
+
+\newpage
+\section{Descrição da Tarefa}
+São oferecidas quatro funções, as quais precisamos aproximar as derivadas em um determinado intervalo. Pede-se para realizar a aproximação de cada uma utilizando os métodos de diferenças finitas avançada, atrasada e centrada. Todas as funções apresentadas possuem solução analítica, de forma que é possível saber o erro de cada método. Com isso em mente, pede-se para avaliar o comportamento de cada método com diferentes passos (representado pela letra $h$).
+
+Tendo em vista que os métodos não mudam de uma função para outra, e que todos os cálculos são feitos de forma explícita, a última etapa para automatizar esse processo é fazer a leitura da função cuja derivada será aproximada (esse processo é chamado de \textit{parsing} na programação). A Linguagem de Programação utilizada (Julia) permite fazer a instanciação dessas funções a partir de uma entrada de texto. Portanto, para realizar a atividade, foi criado um arquivo JSON contendo cada uma das funções e intervalos pedidos.
+
+Esse arquivo é lido por um \textit{script}, que realiza a leitura, instanciação e aproximação de cada uma das funções no intervalo pedido, para os seguintes passos de malha:
+\begin{enumerate}
+    \item $h=0.1$ ou $h=1 \text{e-}1$;
+    \item $h=0.001$ ou $h=1 \text{e-}3$;
+    \item $h=0.00001$ ou $h=1 \text{e-}5$;
+\end{enumerate}
+Esses valores foram escolhidos pois permitem visualizar de forma intuitiva o aumento da precisão dos métodos. Caso utilizássemos valores menores, não seria possível ver muita diferença. Os resultados para cada malha são salvos em arquivos tabulados (CSV), e as representações via gráficos são salvas em arquivos de imagem (PNG).
+
+\section{Resultados}
+Como as tabelas possuem números muito longos em precisão, as mesmas estão muito pequenas. No entanto, o \textit{zoom} pode ser utilizado para permitir a leitura.
+
+\subsection{Item $a$}
+\subsubsection{$h=0.1$}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{ll|lllllllll}
+        \hline
+        \csvreader[
+            column count=11,
+            no head,
+            table head=\hline,
+            late after line=\\\hline
+        ]
+        {results/a_h_0.1.csv}
+        {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+        {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+    \end{tabular}}
+    \caption{Item $a$, com $h=0.1$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/a_h_0.1.png}
+    \caption{Gráfico plotado para o item $a$ quando $h=0.1$}
+\end{figure}
+
+\subsubsection{$h=0.01$}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{ll|lllllllll}
+        \hline
+        \csvreader[
+            column count=11,
+            no head,
+            table head=\hline,
+            late after line=\\\hline
+        ]
+        {results/a_h_0.01.csv}
+        {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+        {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+    \end{tabular}}
+    \caption{Item $a$, com $h=0.01$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/a_h_0.01.png}
+    \caption{Gráfico plotado para o item $a$ quando $h=0.01$}
+\end{figure}
+
+\subsubsection{$h=0.0001$}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{ll|lllllllll}
+        \hline
+        \csvreader[
+            column count=11,
+            no head,
+            table head=\hline,
+            late after line=\\\hline
+        ]
+        {results/a_h_0.0001.csv}
+        {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+        {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+    \end{tabular}}
+    \caption{Item $a$, com $h=0.0001$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/a_h_0.0001.png}
+    \caption{Gráfico plotado para o item $a$ quando $h=0.0001$}
+\end{figure}
+
+
+\subsection{Item $b$}
+\subsubsection{$h=0.1$}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{ll|lllllllll}
+        \hline
+        \csvreader[
+            column count=11,
+            no head,
+            table head=\hline,
+            late after line=\\\hline
+        ]
+        {results/b_h_0.1.csv}
+        {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+        {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+    \end{tabular}}
+    \caption{Item $b$, com $h=0.1$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/b_h_0.1.png}
+    \caption{Gráfico plotado para o item $b$ quando $h=0.1$}
+\end{figure}
+
+\subsubsection{$h=0.01$}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{ll|lllllllll}
+        \hline
+        \csvreader[
+            column count=11,
+            no head,
+            table head=\hline,
+            late after line=\\\hline
+        ]
+        {results/b_h_0.01.csv}
+        {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+        {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+    \end{tabular}}
+    \caption{Item $b$, com $h=0.01$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/b_h_0.01.png}
+    \caption{Gráfico plotado para o item $b$ quando $h=0.01$}
+\end{figure}
+
+\subsubsection{$h=0.0001$}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{ll|lllllllll}
+        \hline
+        \csvreader[
+            column count=11,
+            no head,
+            table head=\hline,
+            late after line=\\\hline
+        ]
+        {results/b_h_0.0001.csv}
+        {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+        {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+    \end{tabular}}
+    \caption{Item $b$, com $h=0.0001$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/b_h_0.0001.png}
+    \caption{Gráfico plotado para o item $b$ quando $h=0.0001$}
+\end{figure}
+
+
+\subsection{Item $c$}
+\subsubsection{$h=0.1$}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{ll|lllllllll}
+        \hline
+        \csvreader[
+            column count=11,
+            no head,
+            table head=\hline,
+            late after line=\\\hline
+        ]
+        {results/c_h_0.1.csv}
+        {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+        {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+    \end{tabular}}
+    \caption{Item $c$, com $h=0.1$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/c_h_0.1.png}
+    \caption{Gráfico plotado para o item $c$ quando $h=0.1$}
+\end{figure}
+
+\subsubsection{$h=0.01$}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{ll|lllllllll}
+        \hline
+        \csvreader[
+            column count=11,
+            no head,
+            table head=\hline,
+            late after line=\\\hline
+        ]
+        {results/c_h_0.01.csv}
+        {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+        {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+    \end{tabular}}
+    \caption{Item $c$, com $h=0.01$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/c_h_0.01.png}
+    \caption{Gráfico plotado para o item $c$ quando $h=0.01$}
+\end{figure}
+
+\subsubsection{$h=0.0001$}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{ll|lllllllll}
+        \hline
+        \csvreader[
+            column count=11,
+            no head,
+            table head=\hline,
+            late after line=\\\hline
+        ]
+        {results/c_h_0.0001.csv}
+        {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+        {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+    \end{tabular}}
+    \caption{Item $c$, com $h=0.0001$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/c_h_0.0001.png}
+    \caption{Gráfico plotado para o item $c$ quando $h=0.0001$}
+\end{figure}
+
+
+\subsection{Item $d$}
+\subsubsection{$h=0.1$}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{ll|lllllllll}
+        \hline
+        \csvreader[
+            column count=11,
+            no head,
+            table head=\hline,
+            late after line=\\\hline
+        ]
+        {results/d_h_0.1.csv}
+        {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+        {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+    \end{tabular}}
+    \caption{Item $d$, com $h=0.1$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/d_h_0.1.png}
+    \caption{Gráfico plotado para o item $d$ quando $h=0.1$}
+\end{figure}
+
+\subsubsection{$h=0.01$}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{ll|lllllllll}
+        \hline
+        \csvreader[
+            column count=11,
+            no head,
+            table head=\hline,
+            late after line=\\\hline
+        ]
+        {results/d_h_0.01.csv}
+        {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+        {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+    \end{tabular}}
+    \caption{Item $d$, com $h=0.01$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/d_h_0.01.png}
+    \caption{Gráfico plotado para o item $d$ quando $h=0.01$}
+\end{figure}
+
+\subsubsection{$h=0.0001$}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{ll|lllllllll}
+        \hline
+        \csvreader[
+            column count=11,
+            no head,
+            table head=\hline,
+            late after line=\\\hline
+        ]
+        {results/d_h_0.0001.csv}
+        {1=\x,2=\ValorReal,3=\ValorAvancada,4=\ErroAvancada,5=\ErroAvancadaRelativa,6=\ValorAtrasada,7=\ErroAtrasada,8=\ErroAtrasadaRelativa,9=\ValorCentrada,10=\ErroCentrada,11=\ErroCentradaRelativa}
+        {\x&\ValorReal&\ValorAvancada&\ErroAvancada&\ErroAvancadaRelativa&\ValorAtrasada&\ErroAtrasada&\ErroAtrasadaRelativa&\ValorCentrada&\ErroCentrada&\ErroCentradaRelativa}
+    \end{tabular}}
+    \caption{Item $d$, com $h=0.0001$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/d_h_0.0001.png}
+    \caption{Gráfico plotado para o item $d$ quando $h=0.0001$}
+\end{figure}
+
+\end{document}

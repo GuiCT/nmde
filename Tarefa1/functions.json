@@ -1,0 +1,30 @@
+{
+    "usedStepsizes": [1e-1, 1e-2, 1e-4],
+    "functions": {
+        "a": {
+            "function": "sin(exp(2 * x))",
+            "interval": [0, 1],
+            "derivative": "2 * exp(2 * x) * cos(exp(2 * x))"
+        },
+        "b": {
+            "function": "sin(x) / log(x)",
+            "interval": [6, 7],
+            "derivative": "(cos(x) * log(x) - sin(x) / x) / (log(x) ^ 2)"
+        },
+        "c": {
+            "function": "log(x) * sin(x)",
+            "interval": [0.5, 1.5],
+            "derivative": "sin(x) / x + log(x) * cos(x)"
+        },
+        "d": {
+            "function": "exp(sin(x))",
+            "interval": [0.5, 1.5],
+            "derivative": "cos(x) * exp(sin(x))"
+        },
+        "customFunction": {
+            "function": "cos(x^2)",
+            "interval": [1.725, 4.475],
+            "derivative": "-2 * x * sin(x^2)"
+        }
+    }
+}
