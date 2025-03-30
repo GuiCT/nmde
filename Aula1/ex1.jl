@@ -1,15 +1,18 @@
 using DataFrames
 using Plots
 using XLSX
+using Printf
 
-FOLDER_NAME = something(ARGS[1], "ex1")
-FUNCTION_LATEX = "ln(x)"
-X₀ = 1.8
+FOLDER_NAME = ARGS[1]
+PARSED_FUNCTION_STRING = @sprintf "x -> %s" ARGS[2]
+PARSED_FUNCTION_DERIVATIVE_STRING = @sprintf "x -> %s" ARGS[3]
+FUNCTION_LATEX_STRING = ARGS[4]
+X₀ = parse(Float64, ARGS[5])
 
-# Função analisada: ln(x)
-func = log
+# Função analisada
+func = Meta.parse(PARSED_FUNCTION_STRING) |> eval
 # Derivada (solução analítica): 1/x
-deriv = inv
+deriv = Meta.parse(PARSED_FUNCTION_DERIVATIVE_STRING) |> eval
 # Valor da derivada em X₀
 expected_value = deriv(X₀)
 # Diferença avançada
@@ -26,11 +29,7 @@ df = DataFrame(
     Erro=Float64[],
 )
 
-h_list = LinRange(
-    (10.0 ^ (-1)),
-    (10.0 ^ (-8)),
-    100
-)
+h_list = [10. ^ k for k in -1:-1:-8]
 
 for h in h_list
     val_forwards = forward_diff(func, X₀, h)
@@ -56,7 +55,7 @@ centered_diff_df = filter(
     df
 )
 
-mkpath("results/$(FOLDER_NAME)")
+mkpath("results/ex1/$(FOLDER_NAME)")
 p = plot(
     forward_diff_df.Passo,
     [
@@ -67,15 +66,15 @@ p = plot(
     xflip = true,
     xscale = :log10,
     label = ["Avançada" "Atrasada" "Centrada"],
-    title = "Estimativa de \$y'($(X₀))\$ usando diferenças finitas\n\$y = $(FUNCTION_LATEX)\$",
+    title = "Estimativa de \$y'($(X₀))\$ usando diferenças finitas\n\$y = $(FUNCTION_LATEX_STRING)\$",
     xlabel = "Passo",
     ylabel = "Erro",
     dpi = 450,
 )
-savefig(p, "results/$(FOLDER_NAME)/graph.png")
+savefig(p, "results/ex1/$(FOLDER_NAME)/graph.png")
 
 XLSX.writetable(
-    "results/$(FOLDER_NAME)/data.xlsx",
+    "results/ex1/$(FOLDER_NAME)/data.xlsx",
     "Avançada" => forward_diff_df,
     "Atrasada" => backwards_diff_df,
     "Centrada" => centered_diff_df
