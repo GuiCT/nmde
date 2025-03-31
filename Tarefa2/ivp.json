@@ -1,0 +1,66 @@
+[
+    {
+        "name": "ex1/a/",
+        "interval": [0, 1],
+        "dy": "x - y",
+        "y0": "1",
+        "exactSolution": "x - 1 + 2 * exp(-x)",
+        "usedMethods": ["explicit:ExplicitEuler", "implicitEuler", "explicit:TrapezoidalMethod"]
+    },
+    {
+        "name": "ex1/b/",
+        "interval": [-2.5, 2.5],
+        "dy": "-2 * x * y",
+        "y0": "exp(-6.25)",
+        "exactSolution": "exp(-(x ^ 2))",
+        "usedMethods": ["explicit:ExplicitEuler", "implicitEuler", "explicit:TrapezoidalMethod"]
+    },
+    {
+        "name": "ex1/c/",
+        "interval": [0, 2],
+        "dy": "5*y - 1",
+        "y0": "1.2",
+        "exactSolution": "exp(5*x) + 0.2",
+        "usedMethods": ["explicit:ExplicitEuler", "implicitEuler", "explicit:TrapezoidalMethod"]
+    },
+    {
+        "name": "ex1/d/",
+        "interval": [0, 2],
+        "dy": "y - (x ^ 2) + 1",
+        "y0": "0.5",
+        "exactSolution": "(x + 1) ^ 2 - 0.5 * exp(x)",
+        "usedMethods": ["explicit:ExplicitEuler", "implicitEuler", "explicit:TrapezoidalMethod"]
+    },
+    {
+        "name": "ex2/a/",
+        "interval": [0, 1],
+        "dy": "x - y + 2",
+        "y0": "2",
+        "exactSolution": "exp(-x) + x + 1",
+        "usedMethods": ["explicit:RK3Classic", "explicit:RK4Classic"]
+    },
+    {
+        "name": "ex2/b/",
+        "interval": [0, 1],
+        "dy": "-2 * x * (y ^ 2)",
+        "y0": "0.5",
+        "exactSolution": "1/(x ^ 2 + 2)",
+        "usedMethods": ["explicit:RK3Classic", "explicit:RK4Classic"]
+    },
+    {
+        "name": "ex3/a/",
+        "interval": [0, 1],
+        "dy": "x - y + 2",
+        "y0": "2",
+        "exactSolution": "exp(-x) + x + 1",
+        "usedMethods": ["explicit:ModifiedEuler", "explicit:ImprovedEuler"]
+    },
+    {
+        "name": "ex3/b/",
+        "interval": [0, 1],
+        "dy": "-2 * x * (y ^ 2)",
+        "y0": "0.5",
+        "exactSolution": "1/(x ^ 2 + 2)",
+        "usedMethods": ["explicit:ModifiedEuler", "explicit:ImprovedEuler"]
+    }
+]
