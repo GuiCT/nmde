@@ -82,6 +82,7 @@ for obj in from_json
         labels_methods = reshape([m[3] for m in methods], (1, :))
         labels = hcat("Real", labels_methods)
         colors = hcat(:black, [:red :blue :purple :orange][:, 1:length(methods)])
+        colors_errors = [:red :blue :purple :orange][:, 1:length(methods)]
         styles = hcat(:solid, fill(:dash, (1, length(methods))))
         p = plot(
             base_df.x,
@@ -98,7 +99,7 @@ for obj in from_json
         p2 = plot(
             base_df.x,
             abs_error_values,
-            linecolor = colors,
+            linecolor = colors_errors,
             linestyle = :dash,
             label = labels_methods,
             title = "Erros absolutos",
@@ -110,7 +111,7 @@ for obj in from_json
         p3 = plot(
             base_df.x,
             rel_error_values,
-            linecolor = colors,
+            linecolor = colors_errors,
             linestyle = :dash,
             label = labels_methods,
             title = "Erros relativos",

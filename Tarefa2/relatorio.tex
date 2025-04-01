@@ -1075,6 +1075,277 @@ x & Erro absoluto (Euler Explícito) & Erro relativo (Euler Explícito) & Erro a
     \includegraphics[width=\linewidth]{results/ex1/d/h_0.001_rel_error.png}
     \caption{Gráfico plotado para o erro relativo do item $d$ quando $h=0.001$}
 \end{figure}
+\subsection{Exercício 1, item $e$}\subsubsection{$h=0.1$}
+
+Para o item $e$, foi solicitado que se sugerisse um problema de valor inicial próprio pelo aluno, com solução analítica. Foi escolhido o problema de valor inicial dado pela Equação (\ref{eq:ivp_propria}), que descreve uma Equação Logística.
+
+\begin{equation}\label{eq:ivp_propria}
+    \begin{cases}
+    y'=25\left(1 - \dfrac{y}{50}\right) \quad x \in [0, 10]\\
+    y(0)=1
+    \end{cases}
+\end{equation}
+
+A solução analítica para esse PVI é dada pela Equação (\ref{eq:solucao_ivp})
+
+\begin{equation}\label{eq:solucao_ivp}
+    y(x) = -49 e^{\frac{-x}{2}} + 50
+\end{equation}
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+\begin{tabular}{ccccc}
+\toprule
+x & Valor real & Valor (Euler Explícito) & Valor (Euler Implícito) & Valor (Método dos Trapézios)\\
+\midrule
+0.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000\\
+1.0000 & 20.2800 & 20.6619 & 19.9183 & 20.2736\\
+2.0000 & 31.9739 & 32.4342 & 31.5324 & 31.9661\\
+3.0000 & 39.0666 & 39.4827 & 38.6625 & 39.0595\\
+4.0000 & 43.3686 & 43.7029 & 43.0398 & 43.3628\\
+5.0000 & 45.9778 & 46.2297 & 45.7270 & 45.9735\\
+6.0000 & 47.5604 & 47.7426 & 47.3768 & 47.5573\\
+7.0000 & 48.5203 & 48.6484 & 48.3896 & 48.5181\\
+8.0000 & 49.1025 & 49.1907 & 49.0113 & 49.1010\\
+9.0000 & 49.4557 & 49.5155 & 49.3930 & 49.4546\\
+10.0000 & 49.6698 & 49.7099 & 49.6274 & 49.6691\\
+\bottomrule
+\end{tabular}
+}
+    \caption{Valores obtidos para o item $e$ com $h=0.1$}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+\begin{tabular}{ccccccc}
+\toprule
+x & Erro absoluto (Euler Explícito) & Erro relativo (Euler Explícito) & Erro absoluto (Euler Implícito) & Erro relativo (Euler Implícito) & Erro absoluto (Método dos Trapézios) & Erro relativo (Método dos Trapézios)\\
+\midrule
+0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00\\
+1.00e+00 & 3.82e-01 & 1.88e-02 & 3.62e-01 & 1.78e-02 & 6.43e-03 & 3.17e-04\\
+2.00e+00 & 4.60e-01 & 1.44e-02 & 4.41e-01 & 1.38e-02 & 7.80e-03 & 2.44e-04\\
+3.00e+00 & 4.16e-01 & 1.07e-02 & 4.04e-01 & 1.03e-02 & 7.10e-03 & 1.82e-04\\
+4.00e+00 & 3.34e-01 & 7.71e-03 & 3.29e-01 & 7.58e-03 & 5.74e-03 & 1.32e-04\\
+5.00e+00 & 2.52e-01 & 5.48e-03 & 2.51e-01 & 5.46e-03 & 4.35e-03 & 9.47e-05\\
+6.00e+00 & 1.82e-01 & 3.83e-03 & 1.84e-01 & 3.86e-03 & 3.17e-03 & 6.66e-05\\
+7.00e+00 & 1.28e-01 & 2.64e-03 & 1.31e-01 & 2.70e-03 & 2.24e-03 & 4.62e-05\\
+8.00e+00 & 8.82e-02 & 1.80e-03 & 9.12e-02 & 1.86e-03 & 1.55e-03 & 3.17e-05\\
+9.00e+00 & 5.98e-02 & 1.21e-03 & 6.26e-02 & 1.27e-03 & 1.06e-03 & 2.14e-05\\
+1.00e+01 & 4.01e-02 & 8.06e-04 & 4.25e-02 & 8.55e-04 & 7.15e-04 & 1.44e-05\\
+\bottomrule
+\end{tabular}
+}
+    \caption{Erros obtidos para o item $e$ com $h=0.1$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/ex1/e/h_0.1.png}
+    \caption{Gráfico plotado para o item $e$ quando $h=0.1$}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/ex1/e/h_0.1_abs_error.png}
+    \caption{Gráfico plotado para o erro absoluto do item $e$ quando $h=0.1$}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/ex1/e/h_0.1_rel_error.png}
+    \caption{Gráfico plotado para o erro relativo do item $e$ quando $h=0.1$}
+\end{figure}
+\subsubsection{$h=0.01$}
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+\begin{tabular}{ccccc}
+\toprule
+x & Valor real & Valor (Euler Explícito) & Valor (Euler Implícito) & Valor (Método dos Trapézios)\\
+\midrule
+0.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000\\
+1.0000 & 20.2800 & 20.3172 & 20.2429 & 20.2799\\
+2.0000 & 31.9739 & 32.0191 & 31.9289 & 31.9738\\
+3.0000 & 39.0666 & 39.1077 & 39.0257 & 39.0666\\
+4.0000 & 43.3686 & 43.4018 & 43.3354 & 43.3685\\
+5.0000 & 45.9778 & 46.0030 & 45.9527 & 45.9778\\
+6.0000 & 47.5604 & 47.5787 & 47.5421 & 47.5604\\
+7.0000 & 48.5203 & 48.5333 & 48.5074 & 48.5203\\
+8.0000 & 49.1025 & 49.1115 & 49.0935 & 49.1025\\
+9.0000 & 49.4557 & 49.4618 & 49.4495 & 49.4556\\
+10.0000 & 49.6698 & 49.6740 & 49.6657 & 49.6698\\
+\bottomrule
+\end{tabular}
+}
+    \caption{Valores obtidos para o item $e$ com $h=0.01$}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+\begin{tabular}{ccccccc}
+\toprule
+x & Erro absoluto (Euler Explícito) & Erro relativo (Euler Explícito) & Erro absoluto (Euler Implícito) & Erro relativo (Euler Implícito) & Erro absoluto (Método dos Trapézios) & Erro relativo (Método dos Trapézios)\\
+\midrule
+0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00\\
+1.00e+00 & 3.73e-02 & 1.84e-03 & 3.70e-02 & 1.83e-03 & 6.21e-05 & 3.06e-06\\
+2.00e+00 & 4.52e-02 & 1.41e-03 & 4.50e-02 & 1.41e-03 & 7.54e-05 & 2.36e-06\\
+3.00e+00 & 4.11e-02 & 1.05e-03 & 4.09e-02 & 1.05e-03 & 6.86e-05 & 1.76e-06\\
+4.00e+00 & 3.32e-02 & 7.65e-04 & 3.31e-02 & 7.64e-04 & 5.55e-05 & 1.28e-06\\
+5.00e+00 & 2.51e-02 & 5.47e-04 & 2.51e-02 & 5.47e-04 & 4.21e-05 & 9.15e-07\\
+6.00e+00 & 1.83e-02 & 3.85e-04 & 1.83e-02 & 3.85e-04 & 3.06e-05 & 6.44e-07\\
+7.00e+00 & 1.29e-02 & 2.67e-04 & 1.30e-02 & 2.67e-04 & 2.17e-05 & 4.46e-07\\
+8.00e+00 & 8.96e-03 & 1.82e-04 & 8.99e-03 & 1.83e-04 & 1.50e-05 & 3.06e-07\\
+9.00e+00 & 6.11e-03 & 1.24e-04 & 6.14e-03 & 1.24e-04 & 1.02e-05 & 2.07e-07\\
+1.00e+01 & 4.11e-03 & 8.28e-05 & 4.14e-03 & 8.33e-05 & 6.90e-06 & 1.39e-07\\
+\bottomrule
+\end{tabular}
+}
+    \caption{Erros obtidos para o item $e$ com $h=0.01$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/ex1/e/h_0.01.png}
+    \caption{Gráfico plotado para o item $e$ quando $h=0.01$}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/ex1/e/h_0.01_abs_error.png}
+    \caption{Gráfico plotado para o erro absoluto do item $e$ quando $h=0.01$}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/ex1/e/h_0.01_rel_error.png}
+    \caption{Gráfico plotado para o erro relativo do item $e$ quando $h=0.01$}
+\end{figure}
+\subsubsection{$h=0.005$}
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+\begin{tabular}{ccccc}
+\toprule
+x & Valor real & Valor (Euler Explícito) & Valor (Euler Implícito) & Valor (Método dos Trapézios)\\
+\midrule
+0.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000\\
+1.0000 & 20.2800 & 20.2986 & 20.2614 & 20.2800\\
+2.0000 & 31.9739 & 31.9965 & 31.9514 & 31.9739\\
+3.0000 & 39.0666 & 39.0871 & 39.0461 & 39.0666\\
+4.0000 & 43.3686 & 43.3852 & 43.3520 & 43.3686\\
+5.0000 & 45.9778 & 45.9904 & 45.9653 & 45.9778\\
+6.0000 & 47.5604 & 47.5696 & 47.5513 & 47.5604\\
+7.0000 & 48.5203 & 48.5268 & 48.5139 & 48.5203\\
+8.0000 & 49.1025 & 49.1070 & 49.0980 & 49.1025\\
+9.0000 & 49.4557 & 49.4587 & 49.4526 & 49.4557\\
+10.0000 & 49.6698 & 49.6719 & 49.6678 & 49.6698\\
+\bottomrule
+\end{tabular}
+}
+    \caption{Valores obtidos para o item $e$ com $h=0.005$}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+\begin{tabular}{ccccccc}
+\toprule
+x & Erro absoluto (Euler Explícito) & Erro relativo (Euler Explícito) & Erro absoluto (Euler Implícito) & Erro relativo (Euler Implícito) & Erro absoluto (Método dos Trapézios) & Erro relativo (Método dos Trapézios)\\
+\midrule
+0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00\\
+1.00e+00 & 1.86e-02 & 9.17e-04 & 1.85e-02 & 9.15e-04 & 1.55e-05 & 7.65e-07\\
+2.00e+00 & 2.26e-02 & 7.05e-04 & 2.25e-02 & 7.04e-04 & 1.88e-05 & 5.88e-07\\
+3.00e+00 & 2.05e-02 & 5.25e-04 & 2.05e-02 & 5.24e-04 & 1.71e-05 & 4.38e-07\\
+4.00e+00 & 1.66e-02 & 3.82e-04 & 1.66e-02 & 3.82e-04 & 1.38e-05 & 3.19e-07\\
+5.00e+00 & 1.26e-02 & 2.73e-04 & 1.26e-02 & 2.73e-04 & 1.05e-05 & 2.28e-07\\
+6.00e+00 & 9.15e-03 & 1.92e-04 & 9.15e-03 & 1.92e-04 & 7.64e-06 & 1.61e-07\\
+7.00e+00 & 6.47e-03 & 1.33e-04 & 6.48e-03 & 1.33e-04 & 5.40e-06 & 1.11e-07\\
+8.00e+00 & 4.48e-03 & 9.13e-05 & 4.49e-03 & 9.15e-05 & 3.75e-06 & 7.63e-08\\
+9.00e+00 & 3.06e-03 & 6.18e-05 & 3.07e-03 & 6.20e-05 & 2.56e-06 & 5.17e-08\\
+1.00e+01 & 2.06e-03 & 4.15e-05 & 2.07e-03 & 4.16e-05 & 1.72e-06 & 3.47e-08\\
+\bottomrule
+\end{tabular}
+}
+    \caption{Erros obtidos para o item $e$ com $h=0.005$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/ex1/e/h_0.005.png}
+    \caption{Gráfico plotado para o item $e$ quando $h=0.005$}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/ex1/e/h_0.005_abs_error.png}
+    \caption{Gráfico plotado para o erro absoluto do item $e$ quando $h=0.005$}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/ex1/e/h_0.005_rel_error.png}
+    \caption{Gráfico plotado para o erro relativo do item $e$ quando $h=0.005$}
+\end{figure}
+\subsubsection{$h=0.001$}
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+\begin{tabular}{ccccc}
+\toprule
+x & Valor real & Valor (Euler Explícito) & Valor (Euler Implícito) & Valor (Método dos Trapézios)\\
+\midrule
+0.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000\\
+1.0000 & 20.2800 & 20.2837 & 20.2763 & 20.2800\\
+2.0000 & 31.9739 & 31.9784 & 31.9694 & 31.9739\\
+3.0000 & 39.0666 & 39.0707 & 39.0625 & 39.0666\\
+4.0000 & 43.3686 & 43.3719 & 43.3653 & 43.3686\\
+5.0000 & 45.9778 & 45.9803 & 45.9753 & 45.9778\\
+6.0000 & 47.5604 & 47.5623 & 47.5586 & 47.5604\\
+7.0000 & 48.5203 & 48.5216 & 48.5190 & 48.5203\\
+8.0000 & 49.1025 & 49.1034 & 49.1016 & 49.1025\\
+9.0000 & 49.4557 & 49.4563 & 49.4550 & 49.4557\\
+10.0000 & 49.6698 & 49.6703 & 49.6694 & 49.6698\\
+\bottomrule
+\end{tabular}
+}
+    \caption{Valores obtidos para o item $e$ com $h=0.001$}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+\begin{tabular}{ccccccc}
+\toprule
+x & Erro absoluto (Euler Explícito) & Erro relativo (Euler Explícito) & Erro absoluto (Euler Implícito) & Erro relativo (Euler Implícito) & Erro absoluto (Método dos Trapézios) & Erro relativo (Método dos Trapézios)\\
+\midrule
+0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00 & 0.00e+00\\
+1.00e+00 & 3.72e-03 & 1.83e-04 & 3.71e-03 & 1.83e-04 & 6.19e-07 & 3.05e-08\\
+2.00e+00 & 4.51e-03 & 1.41e-04 & 4.51e-03 & 1.41e-04 & 7.51e-07 & 2.35e-08\\
+3.00e+00 & 4.10e-03 & 1.05e-04 & 4.10e-03 & 1.05e-04 & 6.84e-07 & 1.75e-08\\
+4.00e+00 & 3.32e-03 & 7.65e-05 & 3.32e-03 & 7.64e-05 & 5.53e-07 & 1.27e-08\\
+5.00e+00 & 2.51e-03 & 5.47e-05 & 2.51e-03 & 5.47e-05 & 4.19e-07 & 9.12e-09\\
+6.00e+00 & 1.83e-03 & 3.85e-05 & 1.83e-03 & 3.85e-05 & 3.05e-07 & 6.41e-09\\
+7.00e+00 & 1.29e-03 & 2.67e-05 & 1.29e-03 & 2.67e-05 & 2.16e-07 & 4.45e-09\\
+8.00e+00 & 8.97e-04 & 1.83e-05 & 8.98e-04 & 1.83e-05 & 1.50e-07 & 3.05e-09\\
+9.00e+00 & 6.12e-04 & 1.24e-05 & 6.13e-04 & 1.24e-05 & 1.02e-07 & 2.06e-09\\
+1.00e+01 & 4.13e-04 & 8.31e-06 & 4.13e-04 & 8.31e-06 & 6.88e-08 & 1.39e-09\\
+\bottomrule
+\end{tabular}
+}
+    \caption{Erros obtidos para o item $e$ com $h=0.001$}
+\end{table}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/ex1/e/h_0.001.png}
+    \caption{Gráfico plotado para o item $e$ quando $h=0.001$}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/ex1/e/h_0.001_abs_error.png}
+    \caption{Gráfico plotado para o erro absoluto do item $e$ quando $h=0.001$}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{results/ex1/e/h_0.001_rel_error.png}
+    \caption{Gráfico plotado para o erro relativo do item $e$ quando $h=0.001$}
+\end{figure}
 \subsection{Exercício 2, item $a$}\subsubsection{$h=0.1$}
 
 \begin{table}[H]

@@ -32,6 +32,14 @@
         "usedMethods": ["explicit:ExplicitEuler", "implicitEuler", "explicit:TrapezoidalMethod"]
     },
     {
+        "name": "ex1/e/",
+        "interval": [0, 10],
+        "dy": "25 * (1 - (y / 50))",
+        "y0": "1",
+        "exactSolution": "-49 * exp(-x / 2) + 50",
+        "usedMethods": ["explicit:ExplicitEuler", "implicitEuler", "explicit:TrapezoidalMethod"]
+    },
+    {
         "name": "ex2/a/",
         "interval": [0, 1],
         "dy": "x - y + 2",
