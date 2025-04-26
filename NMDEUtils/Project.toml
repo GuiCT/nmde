@@ -1,0 +1,14 @@
+name = "NMDEUtils"
+uuid = "2c37c516-9fb1-4329-be4d-3d0148bcef8e"
+authors = ["Guilherme Cesar Tomiasi <gtomiasi@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+NonlinearSolve = "8913a72c-1f9b-4ce2-8d82-65094dcecaec"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+
+[compat]
+LinearAlgebra = "1.11.0"
+NonlinearSolve = "4.8.0"
+Statistics = "1.11.1"
