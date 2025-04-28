@@ -1,3 +1,5 @@
+#import "@preview/subpar:0.2.2"
+
 #set page(
   paper: "a4",
     margin: (
@@ -28,9 +30,9 @@
 #outline()
 
 #pagebreak()
-#set heading(numbering: "1.a.")
+#set heading(numbering: "1.a. i.")
 = Aproximação de um PVI
-Aproxime a solução do PVI
+*Enunciado* Aproxime a solução do PVI
 #set math.cases(gap: 0.65em)
 $ cases(
   y'(x) &= &display(1 / (1 + x^2)) - 2 y^2,
@@ -38,17 +40,169 @@ $ cases(
 ) $
 utilizando os métodos de Euler e Runge-Kutta de 4ª ordem. Escolha apropriadamente $h$ e ilustre graficamente a convergência.
 
+*Observação* Pelo enunciado, ficou dúbio se apenas um método de Euler deveria ser aplicado (provavelmente, Euler Explícito), ou ambos, visto que a palavra usada foi "métodos", no plural (podendo se referir a um método de Euler e o de Runge-Kutta, ou ambos de Euler e o de Runge-Kutta). Por essa razão, incluí tanto os métodos de Euler Explícito quanto o de Euler Implícito.
+
 == Comparação com solução analítica
-Plote a solução para diferentes valores de $h$ e compare com a solução analítica da equação diferencial dada por $y(x) = display(x/(1+x^2))$. Calcule os erros das aproximações.
+*Enunciado* Plote a solução para diferentes valores de $h$ e compare com a solução analítica da equação diferencial dada por $y(x) = display(x/(1+x^2))$. Calcule os erros das aproximações.
+
+*Resolução* Foram escolhidos os seguintes valores de passo de malha: {0.1, 0.05, 0.025, 0.0125, 0.01, 0.005, 0.0025, 0.00125, 0.001}. A razão de escolher uma quantidade tão alta será mais óbvia no item b. Para simplificar a visualização, são apresentados 3 casos dentre todos os resultados obtidos#footnote("Os resultados na íntegra serão inclusos em um anexo"): [0.1, 0.01, 0.001], sendo apresentados, para cada passo:
+- *Gráfico da função aproximada*: comparando os métodos com a solução analítica oferecida;
+- *Gráfico do erro global*: comparando a precisão dos resultados obtidos por cada método.
+
+Também será apresentada uma tabela com a média do erro de truncamento local de cada método para cada passo.
+
+=== $h=0.1$
+
+Os gráficos, dados pela @aprox_1_01 e pela @error_1_01, respectivamente, mostram que as aproximações utilizando os métodos de Euler são (esperadamente) muito piores que a do Método de Runge-Kutta de 4a ordem. Enquanto o método de Euler Explícito superestima os valores da função, sua versão implícita subestima os valores. A curva dada pelo método de Runge-Kutta de 4a ordem sobrepõe a função exata dada pela solução analítica.
+
+#figure(
+  image("results/exercicio_1/1.0e-01_graph.png", width: 90%),
+  caption: [Aproximação do PVI do Exercício 1. com $h=0.1$]
+) <aprox_1_01>
+
+#figure(
+  image("results/exercicio_1/1.0e-01_error.png", width: 90%),
+  caption: [Erro de truncamento global da aproximação do PVI do Exercício 1. com $h=0.1$]
+) <error_1_01>
+
+=== $h=0.01$
+
+O comportamento dado pelo caso anterior foi muito atenuado com a redução do tamanho do passo, mas ainda há um erro perceptível dos métodos de Euler quando os comparamos com o método de Runge-Kutta de 4a ordem. O gráfico de erros parece idêntico, com a grande diferença sendo a escala do eixo das ordenadas. Na verdade, essa tendência se mantém, não importa o quanto a malha seja refinada. Os gráficos estão dispostos na @aprox_1_001 e @error_1_001.
+
+#figure(
+  image("results/exercicio_1/1.0e-02_graph.png", width: 90%),
+  caption: [Aproximação do PVI do Exercício 1. com $h=0.01$],
+) <aprox_1_001>
+
+#figure(
+  image("results/exercicio_1/1.0e-02_error.png", width: 90%),
+  caption: [Erro de truncamento global da aproximação do PVI do Exercício 1. com $h=0.01$]
+) <error_1_001>
+
+=== $h=0.001$
+
+Nessa etapa, as soluções obtidas por cada método forma visualmente uma única linha, os erros são impercetíveis na escala geral. Como comentado anteriormente, o gráfico de erros globais continua se comportando da mesma maneira, com sua imagem cada vez mais restrita a um intervalo cada vez mais próximo de zero. Os resultados são dados pela @aprox_1_0001 e @error_1_0001.
+
+#figure(
+  image("results/exercicio_1/1.0e-03_graph.png", width: 90%),
+  caption: [Aproximação do PVI do Exercício 1. com $h=0.001$],
+) <aprox_1_0001>
+
+#figure(
+  image("results/exercicio_1/1.0e-03_error.png", width: 90%),
+  caption: [Erro de truncamento global da aproximação do PVI do Exercício 1. com $h=0.001$],
+) <error_1_0001>
+
+A @tab_1_a_media_etl apresenta a média dos erros de truncamento locais para cada método, e cada tamanho de malha apresentado nesse relatório.
+
+#let medias_etl = csv("results/exercicio_1/report_media_etl.csv")
+#show table.cell.where(y: 0): strong
+#set table(
+  stroke: (x, y) => if y == 0 {
+    (bottom: 0.7pt + black)
+  },
+  align: (x, y) => (
+    if x > 0 { center }
+    else { left }
+  )
+)
+
+#align(center, [
+  #figure(
+    table(
+      columns: 3,
+      table.header([*Método*], [$bold(h)$], [*Média do ETL*]),
+      ..(medias_etl.flatten().slice(3)),
+    ),
+    caption: "Médias dos erros de truncamento locais para o Exercício 1."
+  ) <tab_1_a_media_etl>
+])
+
 
 == Equiparando Euler com Runge-Kutta
-Repita o exercício anterior utilizando o método de Euler com diferentes valores de $h$, de tal forma que a solução seja tão próxima da solução obtida via método de Runge-Kutta quanto possível.
+*Enunciado* Repita o exercício anterior utilizando o método de Euler com diferentes valores de $h$, de tal forma que a solução seja tão próxima da solução obtida via método de Runge-Kutta quanto possível.
+
+*Solução* Nesse item, faremos proveito do grande número de malhas abordados no item anterior. Uma primeira intuição para descrever um passo de malha $h_e$, a ser aplicado sobre o Método de Euler (tanto implícito quanto explícito) para obter um resultado equivalente a aplicar o passo $h_r$ sobre o método de Runge-Kutta de 4a ordem pode ser obtida apenas observando a @tab_1_a_media_etl: tomando $h_r = 0.1$, obtemos uma média de erro de truncamento local na casa de $10 ^ (-7)$. Quando olhamos para o desempenho dos métodos de Euler, um resultado parecido só irá ser atingido quando aplicamos o passo $h_e = 0.001$. Logo, seria preciso de uma malha 100 vezes mais refinada para obter um resultado equivalente.
+
+No entanto, é possível ir além e descrever a relação entre a média do ETL de um método e a média do ETL de outro a partir de uma regressão linear. Como os passos da malha são escolhidos a partir de uma série geométrica, e as médias dos ETL são diretamente proporcionais a esses valores, essa regressão linear não é aplicada sobre uma escala linear, mas sobre uma escala di-log. Para demonstrar isso, a @ex_1graph_media_etl apresenta um gráfico di-log relacionando o refinamento da malha e a queda da média do ETL.
+
+#figure(
+  image("results/exercicio_1/media_etl.png", width: 90%),
+  caption: "Queda da média dos ETL com refinamento da malha"
+) <ex_1graph_media_etl>
+
+Como as médias dos métodos de Euler são basicamente sobrepostas, iremos tratá-las como equivalentes, portanto apenas os valores para Euler Explícito serão utilizados a partir desse ponto. Queremos fazer uma regressão linear sobre os valores dos logaritmos de $h$ e da média do ETL, portanto, são construídas as seguintes matrizes e vetores:
+
+#set math.equation(numbering: "(1)")
+#set math.mat(delim: "[")
+$ A = mat(
+  1, ln(h_1);
+  1, ln(h_2);
+  dots.v, dots.v;
+  1, ln(h_10),
+) quad bold(b) = vec(ln(mu(e)_1), ln(mu(e)_2), dots.v, ln(mu(e)_10)) $
+
+Para os conjuntos de médias de ETL do método de Euler Explícito e o método de Runge-Kutta de 4a ordem. É possível calcular o vetor de coeficientes $bold(x) in RR^(2)$ a partir de aproximação por mínimos quadrados:
+
+$ bold(x) = (A^T A)^(-1) A^T bold(b) = vec(b, a) => ln(mu(e)_i) = a ln(h_i) + b $ 
+
+Dessa forma, serão obtidos os coeficientes $a_e , b_e , a_r , b_r$ que descreverão a relação entre média do ETL e passo da malha. Se queremos encontrar a relação entre $h_e$ e $h_r$ tal que essas médias sejam iguais:
+
+#let nonum(eq) = math.equation(
+  block: true,
+  numbering: none,
+  eq
+)
+#nonum($
+ln(mu_e) = ln(mu_r) => a_e ln(h_e) + b_e = a_r ln(h_r) + b_r\
+=> a_e ln(h_e) = a_r ln(h_r) + (b_r - b_e)\
+=> ln(h_e) = (a_r/a_e)ln(h_r) + (b_r - b_e)/a_e\
+=> h_e = exp(ln(h_r ^ display((a_r/a_e))) + (b_r - b_e)/a_e) = h_r ^ display((a_r/a_e)) exp((b_r - b_e) / a_e)
+$)
+
+$ therefore h_e = h_r ^ display((a_r/a_e)) exp((b_r - b_e) / a_e) $
+
+Os valores dos coeficientes resultantes foram:
+$ a_e = 1.9873, b_e = -1.5846, a_r = 5.0054, b_r = -3.2668 $
+Então a expressão apresentada pela Equação (3) é aproximadamente:
+$ h_e approx h_r^(2.5187) 0.4289 $
+
+Podemos validar essa expressão ao tomar $h_r = 0.1$ e verificar o $h_e$ obtido:
+
+$ h_e approx 0.1^(2.5187) 0.4289 = 1.2991 * 10^(-3) $
+
+Ao traçar uma linha horizontal sobre a média do ETL do método de Runge-Kutta quando $h = 0.1$ e traçando uma reta vertical sobre o eixo das abcissas sobre o ponto com $h = 1.2991 * 10^(-3)$, obtemos o gráfico apresentado pela @ex_1graph_media_etl_intersec, o mesmo demonstrando que a nossa expressão atinge quase que perfeitamente a interseção de onde o método de Euler atingiu o mesmo erro que o método de Runge-Kutta.
+
+#figure(
+  image("results/exercicio_1/media_etl_intersec.png", width: 90%),
+  placement: {top},
+  caption: "Queda da média dos ETL com refinamento da malha"
+) <ex_1graph_media_etl_intersec>
 
 == Número de iterações obtido
-Compare o número de iterações, para esse exercício, entre o método de Euler e o de Runge-Kutta.
+*Enunciado* Compare o número de iterações, para esse exercício, entre o método de Euler e o de Runge-Kutta.
+
+*Solução* Sabendo que o número de iterações sobre um determinado intervalo é igual ao número de elementos no intervalo $[a, b]$ discretizado, com exceção do primeiro, podemos descrever essa quantidade de iterações como:
+
+#nonum($n_i = floor((b - a) / h)$)
+
+Sabemos também a relação entre $h_e, h_r$, então, podemos descrever a quantidade de iterações do método de Euler ($n_e$) e do método de Runge-Kutta ($n_r$) e calcular a razão entre os dois valores:
+
+#nonum($n_e = floor((1 / (h_r^(2.5187) 0.4289))(b - a)), n_r = floor((b - a) / h_r)\
+therefore n_e / n_r = floor((1 / (h_r^(2.5187) 0.4289))(b - a))floor((b - a) / h_r)^(-1)$)
+
+Para prosseguir, ignoraremos a função piso para reduzir ainda mais a expressão:
+
+#nonum($n_e / n_r = (1 / (h_r^(2.5187) 0.4289))(b - a) ((b - a) / h_r)^(-1) = h_r / (h_r^(2.5187) 0.4289) = h_r^(-1.5187) / 0.4289 $)
+
+Portanto, a razão entre o número de iterações necessário para atingir a mesma precisão é dada pela expressão:
+
+$ n_e / n_r = h_r^(-1.5187) / 0.4289 $
+
+Para referência, com $h=0.1$, o método de Runge-Kutta realiza 10 iterações, portanto, o número estimado de iterações que o método de Euler terá de realizar para obter uma precisão similar seria de aproximadamente $10 * 0.1^(-1.5187) / 0.4289 approx 769.7398 = 770$ iterações. Para referência, o resultado obtido com $h=0.001$ realiza 1000 iterações.
 
 = Resolução numérica de PVI; Teste de estabilidade
-Resolva numericamente o PVI definido no intervalo $[0, 1]$:
+*Enunciado* Resolva numericamente o PVI definido no intervalo $[0, 1]$:
 $ cases(
   y' = -y + x,
   y(0) = 1
