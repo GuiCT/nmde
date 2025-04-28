@@ -310,10 +310,124 @@ Utilizando $h=10 ^ (-5)$ e realizando a resolução do sistema linear $y=A\\r$, 
 )
 
 = PVF aproximado por outras diferenças finitas
-Resolva numericamente o PVF definido no intervalo $[0, 1]$:
+*Enunciado* Resolva numericamente o PVF definido no intervalo $[0, 1]$:
 $ cases(
   y'' - y' + x y = e^x (x^2 + 1),
   y(0) = 0,
   y(1) = e
 ) $
 Aplique o método de diferenças finitas, utilizando as fórmulas avançada, atrasada e centrada para as derivadas, e discuta as soluções aproximadas encontradas.
+
+*Discretização e Construção dos Sistemas Lineares* Primeiro é necessário discretizar o domínio $bold(x)$ que será utilizado para a resolução numérica do problema. Por questões de praticidade, a segunda derivada sempre será aproximada pela fórmula da diferença centrada, tendo em vista que as fórmulas de diferenças descentradas apresentam um número maior de pontos necessários. Portanto, assume-se:
+#nonum($y''_i = (y_(i+1) - 2y_i + y_(i-1))/(h^2)$)
+
+Apenas será alterada a forma como é calculada a primeira derivada:
+
+*Avançada* Tomando a aproximação da primeira derivada:
+#nonum($y'_i = (y_(i+1) - y_(i))/h$)
+obtemos:
+#nonum($(y_(i+1) - 2y_i + y_(i-1))/(h^2) - (y_(i+1) - y_(i))/h + x_i y_i = e^(x_i)(x_i^2 + 1)$)
+#nonum($y_(i+1) - 2y_i + y_(i-1) - h y_(i+1) + h y_(i) + h^2 x_i y_i = h^2 e^(x_i)(x_i^2 + 1)$)
+#nonum($(1 - h)y_(i+1) + (-2 + h + h^2 x_i)y_i + (1)y_i = h^2 e^(x_i) (x_i^2 + 1)$)
+#nonum($text("Dados") a = 1, quad b(x) = -2 + h + h^2 x, quad c = 1-h, quad d(x) = h^2 e^x (x^2 + 1)$)
+#nonum($i=2 => (1-h)y_3 + (-2 + h + h^2 x_2)y_2 + (1)(0) = d(x_2)\
+=> b(x_2) y_2 + (c) y_3 = d(x_2)$)
+#nonum($i=n-1 => (1-h)(e) + (-2 + h + h^2 x_(n-1))y_(n-1) + (1)y_(n-2) = d(x_(n-1))\
+=> (a)y_(n-2) + b(x_(n-1)) y_(n-1) = d(x_(n-1)) - (c)(e)$)
+
+Considerando o intervalo discretizado: $bold(x)$, e conhecendo os valores de $y_1 = 0, y_n = e$, podemos representar os valores como a resposta de um sistema linear dado por:
+
+$ mat(
+  b(x_2),c,0,0,dots,0;
+  a,b(x_3),c,0,dots,0;
+  0,a,b(x_4),c,dots,0;
+  dots.v,dots.v,dots.down,dots.down,dots.down,0;
+  0,0,0,0,a,b(x_(n-1))
+)
+vec(
+  y_2,y_3,dots.v,y_(n-2),y_(n-1)
+)
+=
+vec(
+  d(x_2),d(x_3),dots.v,d(x_(n-2)),d(x_(n-1))-(c)(e)
+) $
+
+Os valores de $y_1, y_n$ não estão inclusos no sistema pois eles já são conhecidos. Os dois são embutidos para os cálculos de $y_2, y_(n-1)$ a partir de uma modifcação do vetor resultante do produto matriz-vetor. O resultado final, portanto, será dado pelo vetor combinando os valores nas extremidades e no interior do domínio:
+
+$ bold(y) = vec(y_1, bold(hat(y)), y_n) = vec(0, bold(hat(y)), e) $
+
+#pagebreak()
+*Atrasada* Tomando a aproximação da primeira derivada:
+#nonum($y'_i = (y_(i) - y_(i-1))/h$)
+obtemos:
+#nonum($(y_(i+1) - 2y_i + y_(i-1))/(h^2) - (y_(i) - y_(i-1))/h + x_i y_i = e^(x_i)(x_i^2 + 1)$)
+#nonum($y_(i+1) - 2y_i + y_(i-1) - h y_(i) + h y_(i-1) + h^2 x_i y_i = h^2 e^(x_i)(x_i^2 + 1)$)
+#nonum($(1)y_(i+1) + (-2 - h + h^2 x_i)y_i + (1 + h)y_(i-1) = h^2 e^(x_i)(x_i^2 + 1)$)
+
+De forma análoga a diferença avançada, precisamos alterar os valores na matriz e vetor com base nos coeficientes calculados:
+
+#nonum($text("Dados") a = 1 + h, quad b(x) = -2 - h + h^2 x, quad c = 1, quad d(x) = h^2 e^x (x^2 + 1)$)
+
+#nonum($i=2 => (1)y_3 + (-2 - h + h^2 x_2)y_2 + (1 + h)(0) = d(x_2)\
+=> b(x_2) y_2 + (c) y_3 = d(x_2)$)
+
+#nonum($i=n-1 => (1)(e) + (-2 - h + h^2 x_(n-1))y_(n-1) + (1 + h)y_(n-2) = d(x_(n-1))\
+=> (a)y_(n-2) + b(x_(n-1)) y_(n-1) = d(x_(n-1)) - (c)(e)$)
+
+$ mat(
+  b(x_2),c,0,0,dots,0;
+  a,b(x_3),c,0,dots,0;
+  0,a,b(x_4),c,dots,0;
+  dots.v,dots.v,dots.down,dots.down,dots.down,0;
+  0,0,0,0,a,b(x_(n-1))
+)
+vec(
+  y_2,y_3,dots.v,y_(n-2),y_(n-1)
+)
+=
+vec(
+  d(x_2),d(x_3),dots.v,d(x_(n-2)),d(x_(n-1))-(c)(e)
+)
+$
+
+*Centrada* Tomando a aproximação da primeira derivada:
+#nonum($y'_i = (y_(i+1) - y_(i-1))/(2h)$)
+obtemos:
+#nonum($(y_(i+1) - 2y_i + y_(i-1))/(h^2) - (y_(i+1) - y_(i-1))/(2h) + x_i y_i = e^(x_i)(x_i^2 + 1)$)
+#nonum($y_(i+1) - 2y_i + y_(i-1) - h/2 y_(i+1) + h/2 y_(i-1) + h^2 x_i y_i = h^2 e^(x_i)(x_i^2 + 1)$)
+#nonum($(1 - h/2)y_(i+1) + (-2 + h^2 x_i)y_i + (1 + h/2)y_(i-1) = h^2 e^(x_i)(x_i^2 + 1)$)
+#nonum($text("Dados") a = 1 + h/2, quad b(x) = -2 + h^2 x, quad c = 1 - h/2, quad d(x) = h^2 e^x (x^2 + 1)$)
+#nonum($i=2 => (1 - h/2)y_3 + (-2 + h^2 x_2)y_2 + (1 + h/2)(0) = d(x_2)\
+=> b(x_2)y_2 + (c)y_3 = d(x_2)$)
+#nonum($i=n-1 => (1 - h/2)(e) + (-2 + h^2 x_(n-1))y_(n-1) + (1 + h/2)y_(n-2) = d(x_(n-1))\
+=> (a)y_(n-2) + b(x_(n-1)) y_(n-1) = d(x_(n-1)) - (c)(e)$)
+
+$ mat(
+  b(x_2),c,0,0,dots,0;
+  a,b(x_3),c,0,dots,0;
+  0,a,b(x_4),c,dots,0;
+  dots.v,dots.v,dots.down,dots.down,dots.down,0;
+  0,0,0,0,a,b(x_(n-1))
+)
+vec(
+  y_2,y_3,dots.v,y_(n-2),y_(n-1)
+)
+=
+vec(
+  d(x_2),d(x_3),dots.v,d(x_(n-2)),d(x_(n-1))-(c)(e)
+)
+$
+
+Foram testados 4 valores diferentes para o refinamento da malha, sendo eles: [0.5, 0.1, 0.05, 0.01]. Como em exercícios anteriores, serão apresentados apenas uma parcela. Foram escolhidos os resultados obtidos pela malha quando $h = 0.5$ e $h = 0.01$, tendo em vista que essa comparação irá gerar a maior diferença entre os resultados observados, estando dispostos nas @aprox_4_05 e @aprox_4_001, respectivamente.
+
+#figure(
+  image("results/exercicio_4/5.0e-01_graph.png", width: 90%),
+  caption: [Aproximação do PVF do Exercício 4. com $h=0.5$]
+) <aprox_4_05>
+
+#figure(
+  image("results/exercicio_4/1.0e-02_graph.png", width: 90%),
+  caption: [Aproximação do PVF do Exercício 4. com $h=0.01$]
+) <aprox_4_001>
+
+É possível perceber que tanto o método que faz uso de diferenciação finita avançada quanto atrasada se aproximam muito da diferença centrada, formando novamente um gráfico quase que sobreposto. Isso se deve ao aumento da precisão com o maior refinamento da malha, o que "esconde" a diferença na ordem entre os métodos. No entanto, a diferenciação finita por esquema centrado possui uma vantagem notória quando malhas menos refinadas são utilizadas.
