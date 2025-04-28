@@ -209,6 +209,68 @@ $ cases(
 ) $
 para diferentes valores de $h$. E discuta a convergência e a estabilidade do método numérico utilizado em questão.
 
+*Resolução: Solução Analítica* Antes de avaliar a estabilidade de qualquer método, é necessário saber a solução analítica do PVI apresentado. A Equação Diferencial que define a função é uma EDO linear de primeira ordem, que pode ser escrita como $y' + y = x$.
+Dado o fator integrante $mu(x) = e^(integral P(x) d x)=e^(integral 1 d x)=e^x$, e multiplicando a EDO por esse fator integrante, obtemos:
+#nonum($ e^x y' + e^x y = e^x x $)
+pela regra do produto, sabe-se que
+#nonum($ e^x y' + e^x y = d/(d x)(e^x y) $) 
+portanto essa expressão torna-se
+#nonum($ d/(d x)(e^x y) = e^x x $)
+ao integrar ambos os lados, obtemos:
+#nonum($ e^x y = integral e^x x d x $)
+o lado direito pode ser simplificado utilizando integração por partes, definindo $u=x$, de forma que $d u = d x$ e $d v = e^x d x$ de forma que $v = e^x$, dessa forma:
+#nonum($ integral e^x x d x = e^x x - integral e^x d x = e^x x - e^x + C $)
+logo
+#nonum($ y = x - 1 + C e^(-x) $)
+como $y(0)=1$, portanto $1 = - 1 + C => C = 2$, resultando na solução analítica:
+$ y(x) = x + 2 e^(-x) - 1 $
+
+*Resolução numérica* Para esse exercício, foram comparadas as estabilidade dos métodos de Euler Explícito e Implícito. Isso pois um deles possui uma região de estabilidade bem definida, e o outro é estável independente do passo de malha escolhido. Foram comparadas malhas com passos [0.1, 0.05, 0.025, 0.01], nesse relatório, são apresentados apenas os resultados para 0.1 e 0.01, para não torná-lo muito extenso.
+
+De forma muito parecida com o exercício anterior, o comportamento de ambos os métodos foram muito parecidos independente da malha escolhida. O método de Euler Explícito tende subestimar o valor da função, enquanto a versão implícita costuma superestimar, como pode ser visto na @aprox_2_01 e @aprox_2_001. Os gráficos dos erros globais, dado pelas @error_2_01 e @error_2_001 deixam essa noção ainda mais perceptível.
+
+#figure(
+  image("results/exercicio_2/1.0e-01_graph.png", width: 90%),
+  caption: [Aproximação do PVI do Exercício 2. com $h=0.1$],
+) <aprox_2_01>
+
+#figure(
+  image("results/exercicio_2/1.0e-01_error.png", width: 90%),
+  caption: [Erro de truncamento global da aproximação do PVI do Exercício 2. com $h=0.1$],
+) <error_2_01>
+
+#figure(
+  image("results/exercicio_2/1.0e-02_graph.png", width: 90%),
+  caption: [Aproximação do PVI do Exercício 2. com $h=0.01$],
+) <aprox_2_001>
+
+#figure(
+  image("results/exercicio_2/1.0e-02_error.png", width: 90%),
+  caption: [Erro de truncamento global da aproximação do PVI do Exercício 2. com $h=0.01$],
+) <error_2_001>
+
+*Teste da região de estabilidade* Tendo em vista que a solução analítica possui um termo exponencial, podemos comparar o desempenho dos métodos para passos que fogem da região de estabilidade do método de Euler Explícito, que é dada por:
+$ -2 <= h lambda <= 0 => 0 <= h <= 2 because lambda=-1 $
+
+No entanto, o próprio intervalo de integração do PVI é menor que o passo de malha que foge dessa região de estabilidade. Portanto, para fazer essa demonstração, vamos ampliar esse intervalo de $[0,1]$ para $[0,20]$ e testar os passos de $[2.5, 2.0, 1.5]$ em ambos os métodos. Os resultados, apresentados pelas @aprox_2ext_25, @aprox_2ext_20 e @aprox_2ext_15, respectivamente, deixam muito evidente a diferença no comportamento do método explícito conforme o passo adentra a região de estabilidade.
+
+No primeiro caso, o erro global cresce de forma descontrolada, no segundo, o erro alterna de forma periódica, embora não cresça, e no último, o erro tende e ser neutralizado conforme a função cresce. Nota-se também a estabilidade do método implícito, que acompanha a solução analítica de forma muito mais próxima, independente do passo utilizado.
+
+#figure(
+  image("results/exercicio_2_ext/2.5e+00_graph.png", width: 75%),
+  caption: [Aproximação do PVI do Exercício 2. com $h=2.5$],
+) <aprox_2ext_25>
+
+#figure(
+  image("results/exercicio_2_ext/2.0e+00_graph.png", width: 75%),
+  caption: [Aproximação do PVI do Exercício 2. com $h=2.0$],
+) <aprox_2ext_20>
+
+#figure(
+  image("results/exercicio_2_ext/1.5e+00_graph.png", width: 75%),
+  caption: [Aproximação do PVI do Exercício 2. com $h=1.5$],
+) <aprox_2ext_15>
+
 = PVF aproximado por diferenças centradas
 *Enunciado* Considere o seguinte PVF definido no intervalo $[0, 1]$:
 $ cases(
