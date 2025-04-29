@@ -93,6 +93,8 @@ for h in step_sizes
 end
 
 df = vcat(result_dfs...)
+df_results_path = joinpath(result_path, "resultados.csv")
+CSV.write(df_results_path, df)
 #endregion
 
 #region Item b)
@@ -116,6 +118,18 @@ report_table_total
 rename!(report_table_total, "h" => "\$h\$", "mean_error" => "Média do ETL")
 report_table_path = joinpath(result_path, "report_media_etl.csv")
 CSV.write(report_table_path, report_table_total)
+# ==============================================================================
+
+# ========================== Tabela disposta no anexo ==========================
+by_stepsize = groupby(res, "h")
+table_total = vcat(by_stepsize..., cols=:union)
+table_total = select(
+    table_total,
+    Not("mean_error"), "mean_error" => ByRow(r -> @sprintf "%.3e" r) => :mean_error
+)
+rename!(table_total, "h" => "\$h\$", "mean_error" => "Média do ETL")
+table_path = joinpath(result_path, "media_etl.csv")
+CSV.write(table_path, table_total)
 # ==============================================================================
 
 # Agrupando por método
@@ -173,7 +187,6 @@ log_values_rk4 = select(
 A_rk4 = Matrix([ones(df_rows_count) log_values_rk4.h_log])
 b_rk4 = log_values_rk4.mean_error_log
 x_rk4 = (inv(transpose(A_rk4) * A_rk4) * transpose(A_rk4)) * b_rk4
-x_rk4
 
 b_e, a_e = x_ee
 b_rk4, a_rk4 = x_rk4

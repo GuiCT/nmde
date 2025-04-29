@@ -2,6 +2,7 @@ using NMDEUtils
 using DataFrames
 using Plots
 using Printf
+using CSV
 
 problem = InitialValueProblem(
     (x, y) -> -y + x,
@@ -81,6 +82,10 @@ for h in step_sizes
     savefig(error_plot, error_plot_file_name)
 end
 
+df_total = vcat(df_vec..., cols=:union)
+df_total_path = joinpath(result_path, "resultados.csv")
+CSV.write(df_total_path, df_total)
+
 problem_extended = InitialValueProblem(
     (x, y) -> -y + x,
     1,
@@ -89,6 +94,7 @@ problem_extended = InitialValueProblem(
 );
 
 step_sizes_extended = [2.5, 2.0, 1.5]
+df_vec_extended = Vector{DataFrame}()
 result_path_extended = joinpath(@__DIR__, "results", "exercicio_2_ext")
 mkpath(result_path_extended)
 for h in step_sizes_extended
@@ -98,8 +104,8 @@ for h in step_sizes_extended
     sol_ie = implicitEuler(problem_extended; stepSize=h)
     df_ee = sol_to_df("Euler Explícito", h, sol_ee)
     df_ie = sol_to_df("Euler Implícito", h, sol_ie)
-    push!(df_vec, df_ee)
-    push!(df_vec, df_ie)
+    push!(df_vec_extended, df_ee)
+    push!(df_vec_extended, df_ie)
 
     main_plot = plot(
         df_ee[!, "x"],
@@ -133,4 +139,7 @@ for h in step_sizes_extended
     savefig(error_plot, error_plot_file_name)
 end
 
+df_total_extended = vcat(df_vec_extended..., cols=:union)
+df_total_extended_path = joinpath(result_path_extended, "resultados.csv")
+CSV.write(df_total_extended_path, df_total_extended)
 #endregion

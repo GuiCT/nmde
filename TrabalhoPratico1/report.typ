@@ -1,5 +1,3 @@
-#import "@preview/subpar:0.2.2"
-
 #set page(
   paper: "a4",
     margin: (
@@ -15,6 +13,10 @@
   region: "BR",
   size: 12pt,
   font: "New Computer Modern",
+)
+
+#set par(
+  justify: true
 )
 
 #let titulo = "Trabalho Prático 1"
@@ -84,12 +86,12 @@ O comportamento dado pelo caso anterior foi muito atenuado com a redução do ta
 Nessa etapa, as soluções obtidas por cada método forma visualmente uma única linha, os erros são impercetíveis na escala geral. Como comentado anteriormente, o gráfico de erros globais continua se comportando da mesma maneira, com sua imagem cada vez mais restrita a um intervalo cada vez mais próximo de zero. Os resultados são dados pela @aprox_1_0001 e @error_1_0001.
 
 #figure(
-  image("results/exercicio_1/1.0e-03_graph.png", width: 90%),
+  image("results/exercicio_1/1.0e-03_graph.png", width: 87%),
   caption: [Aproximação do PVI do Exercício 1. com $h=0.001$],
 ) <aprox_1_0001>
 
 #figure(
-  image("results/exercicio_1/1.0e-03_error.png", width: 90%),
+  image("results/exercicio_1/1.0e-03_error.png", width: 87%),
   caption: [Erro de truncamento global da aproximação do PVI do Exercício 1. com $h=0.001$],
 ) <error_1_0001>
 
@@ -128,23 +130,24 @@ No entanto, é possível ir além e descrever a relação entre a média do ETL 
 
 #figure(
   image("results/exercicio_1/media_etl.png", width: 90%),
-  caption: "Queda da média dos ETL com refinamento da malha"
+  caption: "Queda da média dos ETL com refinamento da malha",
+  placement: {top},
 ) <ex_1graph_media_etl>
 
 Como as médias dos métodos de Euler são basicamente sobrepostas, iremos tratá-las como equivalentes, portanto apenas os valores para Euler Explícito serão utilizados a partir desse ponto. Queremos fazer uma regressão linear sobre os valores dos logaritmos de $h$ e da média do ETL, portanto, são construídas as seguintes matrizes e vetores:
 
 #set math.equation(numbering: "(1)")
 #set math.mat(delim: "[")
-$ A = mat(
+$ M = mat(
   1, ln(h_1);
   1, ln(h_2);
   dots.v, dots.v;
   1, ln(h_10),
-) quad bold(b) = vec(ln(mu(e)_1), ln(mu(e)_2), dots.v, ln(mu(e)_10)) $
+) quad bold(r) = vec(ln(mu(e)_1), ln(mu(e)_2), dots.v, ln(mu(e)_10)) $
 
 Para os conjuntos de médias de ETL do método de Euler Explícito e o método de Runge-Kutta de 4a ordem. É possível calcular o vetor de coeficientes $bold(x) in RR^(2)$ a partir de aproximação por mínimos quadrados:
 
-$ bold(x) = (A^T A)^(-1) A^T bold(b) = vec(b, a) => ln(mu(e)_i) = a ln(h_i) + b $ 
+$ bold(x) = (M^T M)^(-1) M^T bold(r) = vec(b, a) => ln(mu(e)_i) = b + a ln(h_i) $ 
 
 Dessa forma, serão obtidos os coeficientes $a_e , b_e , a_r , b_r$ que descreverão a relação entre média do ETL e passo da malha. Se queremos encontrar a relação entre $h_e$ e $h_r$ tal que essas médias sejam iguais:
 
@@ -290,11 +293,11 @@ $
   a_i = 1 + h^2 / 2 quad b_i = (1 / 2)(1 + (x_i h) / 2) quad c_i = (1 / 2)(1 - (x_i h) / 2)
 $
 Onde
-- $bold(b)=(-b_2, dots, -b_n)$ compõe a diagonal imediatamente à esquerda da diagonal principal;
-- $bold(a)=(a_1, dots, a_n)$ compõe a diagonal principal (perceba que esse valor não depende de $x_i$, sendo portanto constante);
-- $bold(c)=(-c_1, dots, -c_(n-1))$ compõe a diagonal imediatamente à direita da diagonal principal.
+- $bold(b)=(-b_3, dots, -b_(n-1))$ compõe a diagonal imediatamente à esquerda da diagonal principal;
+- $bold(a)=(a_2, dots, a_(n-1))$ compõe a diagonal principal (perceba que esse valor não depende de $x_i$, sendo portanto constante);
+- $bold(c)=(-c_2, dots, -c_(n-2))$ compõe a diagonal imediatamente à direita da diagonal principal.
 
-Para a formação do vetor $r$, resultado a multiplicação da matriz $A$ pelo resultado $y$, utiliza-se
+Para a formação do vetor $bold(r)$, resultado a multiplicação da matriz $A$ pelo interior do domínio $bold(hat(y))$, utiliza-se
 $ r_i = cases(
   -h^2 x_1 + (b_1)(1)quad&i=1,
   -h^2 x_i&i in [2, n-1],
@@ -302,12 +305,12 @@ $ r_i = cases(
 ) $
 devido às condições de fronteira.
 
-Utilizando $h=10 ^ (-5)$ e realizando a resolução do sistema linear $y=A\\r$, obtém-se o resultado apresentado pelo gráfico abaixo:
+Utilizando $h=10 ^ (-5)$ e realizando a resolução de um sistema linear $bold(hat(y))=A\\bold(r)$, obtém-se os valores de $bold(y)$ no interior do domínio. Após incluir os valores das extremidades, obtemos o resultado final, apresentado pelo gráfico na @ex_3.
 
 #figure(
-  image("results/exercicio_3.png", width: 76%),
+  image("results/exercicio_3/exercicio_3.png", width: 76%),
   caption: "Resultado obtido para o Exercício 3"
-)
+) <ex_3>
 
 = PVF aproximado por outras diferenças finitas
 *Enunciado* Resolva numericamente o PVF definido no intervalo $[0, 1]$:
