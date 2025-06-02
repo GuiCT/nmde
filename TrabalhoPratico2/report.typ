@@ -24,7 +24,7 @@
 #let alun = "Guilherme Cesar Tomiasi"
 #let prof = "Analice Costacurta Brandi"
 #let local = "Presidente Prudente"
-#let data = "xx"
+#let data = "03 de junho de 2025"
 
 #import "../capa.typ": capa
 #set math.equation(numbering: "(1)")
