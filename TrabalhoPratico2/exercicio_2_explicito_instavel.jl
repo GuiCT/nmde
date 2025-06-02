@@ -1,12 +1,11 @@
 using Plots
-using SparseArrays
-using LinearAlgebra
+using Printf
 using Dates
 
 L = 1
 α = 0.0834
 bound = (0, 100)
-METHOD = "implicito_alt"
+METHOD = "explicito_instavel"
 RESULT_FOLDER = joinpath(@__DIR__, "results", "ex2", METHOD)
 mkpath(RESULT_FOLDER)
 N_TERMS_EXACT = 100 # Número de termos na série infinita da solução analítica
@@ -15,9 +14,7 @@ h = 0.01 # Δx
 k = 0.001 # Δt
 x = 0:h:L |> collect
 t = 0:k:1 |> collect
-x_size = size(x, 1)
-x̂_size = size(x, 1) - 2
-u_size = (size(t, 1), x_size)
+u_size = (size(t, 1), size(x, 1))
 u_exact = zeros(u_size)
 for (i, ti) in enumerate(t), (j, xj) in enumerate(x)
     n = 1:N_TERMS_EXACT
@@ -35,25 +32,18 @@ u[1, 1] = bound[1]
 u[1, 2:end-1] .= 0
 u[1, end] = bound[2]
 
-σ = (α * k) / (h^2)
-β = 1 + 2σ
+σ = (α * k) / h^2
+@assert σ > 1 / 2 # Garantindo que é INSTÁVEL
 
 t1 = now()
-A = spdiagm(
-    -1 => fill(-σ, (x̂_size - 1,)),
-    0 => fill(β, (x̂_size,)),
-    +1 => fill(-σ, (x̂_size - 1,))
-)
-chol = cholesky(A)
-
 for t in eachindex(t)[1:end-1]
     u[t+1, 1] = bound[1]
     u[t+1, end] = bound[2]
-    result_vec = u[t, 2:end-1]
-    result_vec[1] = result_vec[1] + σ * u[t+1, 1]
-    result_vec[end] = result_vec[end] + σ * u[t+1, end]
-    next_t = @view u[t+1, 2:end-1]
-    next_t .= chol \ result_vec
+    u[t+1, 2:end-1] .= u[t, 2:end-1] .+ σ .* (
+        u[t, 1:end-2] .-
+        (2 .* u[t, 2:end-1]) .+
+        u[t, 3:end]
+    )
 end
 t2 = now()
 telapsed = Dates.value(t2 - t1)
@@ -67,5 +57,10 @@ abs_rel_err[isinf.(abs_rel_err)] .= -Inf
 l2_error_lines = [sum(v .^ 2) for v in eachrow(abs_err)]
 # Erro RELATIVO máximo por linha
 max_rel_error_lines = [maximum(v) for v in eachrow(abs_rel_err)]
+
+# Tratamento específico desse método
+u[isnan.(u)] .= 0.0
+u[isless.(u, 0.0)] .= 0.0
+DO_NOT_USE_LOG_SCALE = true
 
 include("exercicio_2_plot.jl")
