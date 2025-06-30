@@ -1,3 +1,8 @@
 {
-    "editor.rulers": [80]
+    "editor.rulers": [80],
+    "julia.execution.resultType": "both",
+    "julia.inlayHints.runtime.enabled": true,
+    "julia.inlayHints.static.variableTypes.enabled": true,
+    "julia.environmentPath": "e:\\Repositories\\nmde\\TrabalhoPratico3",
+    "julia.NumThreads": 24
 }
